@@ -63,7 +63,6 @@ namespace Route.C42.G04.PL
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
