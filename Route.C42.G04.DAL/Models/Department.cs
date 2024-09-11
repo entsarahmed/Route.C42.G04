@@ -12,10 +12,14 @@ namespace Route.C42.G04.DAL.Models
     {
         public int Id { get; set; } //Primary Key
 
+        [Required(ErrorMessage = "Code is Required")]
         public string Code { get; set; }
 
+        [Required(ErrorMessage = "Name is Required!")]
         public string Name { get; set; }
-        public DateTime DateOfCreation { get; set; } = DateTime.Now;
+
+        [Display(Name ="Date Of Creation")]
+        public DateTime DateOfCreation { get; set; }
 
 
 

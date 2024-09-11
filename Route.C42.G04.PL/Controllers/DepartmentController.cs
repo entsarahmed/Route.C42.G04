@@ -9,19 +9,19 @@ namespace Route.C42.G04.PL.Controllers
 
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepos;
+        private readonly IDepartmentRepository _departmentsRepo;
 
 
-        public DepartmentController(IDepartmentRepository departmentRepos)  //Ask CLR for Creating an Object from Class Implementing IDepartmentRepository   
+        public DepartmentController(IDepartmentRepository departmentsRepo)  //Ask CLR for Creating an Object from Class Implementing IDepartmentRepository   
         {
-            _departmentRepos=departmentRepos;
+            _departmentsRepo=departmentsRepo;
         }
 
         // Department/Index 
         public IActionResult Index()
         {
-           // var departments = _departmentRepo.GetAll();
-            return View();
+            var departments = _departmentsRepo.GetAll();
+            return View(departments);
         }
     }
 }
