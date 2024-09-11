@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Route.C42.G04.BLL.Interfaces
 {
-    internal interface IDepartmentRepository
+    public interface IDepartmentRepository
     {
         IEnumerable<Department> GetAll();
 

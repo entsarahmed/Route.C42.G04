@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Route.C42.G04.BLL.Repositories
 {
-    internal class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly ApplicationDbContext _dbContext;//NULL
 

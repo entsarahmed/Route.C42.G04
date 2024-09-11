@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Route.C42.G04.BLL.Interfaces;
+using Route.C42.G04.BLL.Repositories;
 using Route.C42.G04.DAL.Data;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,8 @@ namespace Route.C42.G04.PL
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
         }
 
