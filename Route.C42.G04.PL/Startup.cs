@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Route.C42.G04.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace Route.C42.G04.PL
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; private set; }
+
+        // public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,7 +40,7 @@ namespace Route.C42.G04.PL
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer("Server = .; Database = MVCApplication; Trusted_Connection = True;");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
         }
@@ -70,7 +74,5 @@ namespace Route.C42.G04.PL
         }
     }
 
-    internal class ApplicationDbContext
-    {
-    }
+   
 }
