@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Route.C42.G04.DAL.Models
 {
     //Model
-    internal class Department
+    public class Department
     {
         public int Id { get; set; } //Primary Key
 

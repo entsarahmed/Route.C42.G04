@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,20 @@ namespace Route.C42.G04.PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews();//Register Built-In Services Required by MVC
+
+
+            //services.AddScoped<ApplicationDbContext>();
+
+
+            //services.AddScoped<DbContextOptions<ApplicationDbContext>>();
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server = .; Database = MVCApplication; Trusted_Connection = True;"));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer("Server = .; Database = MVCApplication; Trusted_Connection = True;");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,5 +68,9 @@ namespace Route.C42.G04.PL
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+    }
+
+    internal class ApplicationDbContext
+    {
     }
 }
