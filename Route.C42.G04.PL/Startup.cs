@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Route.C42.G04.BLL.Interfaces;
+using Route.C42.G04.BLL.Repositories;
+using Route.C42.G04.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +18,35 @@ namespace Route.C42.G04.PL
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; private set; }
+
+        // public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews();//Register Built-In Services Required by MVC
+
+
+            //services.AddScoped<ApplicationDbContext>();
+
+
+            //services.AddScoped<DbContextOptions<ApplicationDbContext>>();
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server = .; Database = MVCApplication; Trusted_Connection = True;"));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +67,6 @@ namespace Route.C42.G04.PL
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -54,4 +76,6 @@ namespace Route.C42.G04.PL
             });
         }
     }
+
+   
 }
